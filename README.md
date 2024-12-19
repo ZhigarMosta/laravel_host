@@ -94,8 +94,38 @@ use my_laravel_app
 
 ## Миграция
 
-Прописываем команду в терминал, который авторизован в sql 
+Прописываем команду в терминал, который авторизован в sql
+
+## Небольшая шпаргалка
 
 ```sh 
-source my_laravel_app.sql
+    public function users():BelongsTo{
+        return $this->belongsTo(User::class, 'user_id');
+    }
+```
+
+```sh 
+    public function index(){
+        $requests = ModelsRequest::with(['users', 'cars'])->get();
+        return view("admin.index",compact("requests"));
+    }
+```
+```sh 
+    const ADMIN_ROLE = "admin";
+
+    public function isAdmin(){
+        return $this->role === self::ADMIN_ROLE;
+    }
+```
+```sh 
+        if(Auth::check()){
+            if(auth()->user()->isAdmin() === true){
+                return $next($request);
+            }
+        }
+        return redirect('login')->with('error', "Авторизуйтесь под админом"); 
+```
+```sh 
+Route::middleware((Admin::class))->group(function () {
+});
 ```
