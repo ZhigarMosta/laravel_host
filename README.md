@@ -82,10 +82,10 @@ mysql -uroot -p123123 -h localhost
 
 Подключаемся к db use my_laravel_app
 
-Подключаемся к db use 
+Подключаемся к db
 
 ```sh 
-my_laravel_app
+use my_laravel_app
 ```
 
 ## Подготовка к миграции
