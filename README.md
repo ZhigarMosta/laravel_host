@@ -52,6 +52,15 @@ http://<удаленный_хост>:9000
 
 ## Небольшая шпаргалка
 
+```php
+        $cars = DB::table('cars')
+        ->join('tests', 'cars.id_test', '=', 'tests.id')
+        ->where('cars.name', '=', DB::raw('tests.test'))
+        ->where('cars.id', '=', 1)
+        ->select('cars.*')
+        ->get();
+```
+
 ```sh 
     public function users():BelongsTo{
         return $this->belongsTo(User::class, 'user_id');
