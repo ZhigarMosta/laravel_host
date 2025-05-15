@@ -95,6 +95,18 @@ http://<удаленный_хост>:9000
         }
         return redirect('login')->with('error', "Авторизуйтесь под админом"); 
 ```
+
+картинки
+
+```php
+                    <form method="POST"  enctype="multipart/form-data" action="{{ route('detail.store') }}">
+                        @csrf
+                        <div>
+                            <x-input-label for="path_imahe" :value="__('number')" />
+                            <x-text-input id="path_imahe" class="block mt-1 w-full" type="file" name="path_imahe" :value="old('path_imahe')" required />
+                            <x-input-error :messages="$errors->get('path_imahe')" class="mt-2" />
+                        </div>
+```
 ```sh 
 Route::middleware((Admin::class))->group(function () {
 });
