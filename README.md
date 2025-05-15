@@ -53,6 +53,13 @@ http://<удаленный_хост>:9000
 ## Небольшая шпаргалка
 
 ```php
+
+        \App\Models\User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'password' => bcrypt("123123123"),
+        ]);
+
         $cars = DB::table('cars')
         ->join('tests', 'cars.id_test', '=', 'tests.id')
         ->where('cars.name', '=', DB::raw('tests.test'))
