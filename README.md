@@ -1,8 +1,9 @@
-## Подключение к машине
+seeders
 
-Проваливаемся в машину `ssh <имя_пользователя>@<удаленный_хост>` для одарённых (простите), имя root, потом собака @, дальше циферки с точкой
+создаём его и вписываем его в Dockerfile после строчки  `&& php artisan migrate \` 
+строчка должна отличаться только именем `&& php artisan db:seed --class=DatabaseSeeder \`
 
-## Настройка архитектуры на машине
+Проваливаемся в машину `ssh <имя_пользователя>@<удаленный_хост>`
 
 Cоздаём папку проекта 
 
@@ -10,39 +11,34 @@ Cоздаём папку проекта
 mkdir project
 ```
 
-Проваливаемся в папку проекта 
-
 ```sh
 cd project
 ```
 
-## Подготовка к клонированию проекта на удалённый хост
-
 Из проекта, удаляем папки: `vendor`, `node_modules`, `db_data` последнего может не быть
 
-## Клонированию проекта на удалённый хост
-
-Для этого нужно воспользоваться терминалом, который не подключён к удалённому хосту
-
-Этой командой 
+ Клонирование проекта на удалённый хост
 
 ```sh
 scp -r . <имя_пользователя>@<удаленный_хост>:/root/project`
 ```
 
- клонируется проект в ранее созданую папку `project
-
-
-Вводим пароль и ждём, пока всё склонируется
-
-## Запуст докера
+в другом терминале запускаем докер
 
 ```sh
 ./run.sh
 ```
-Командой запускаем docker на удалённомом хосте
+если выдало ошибук permission denaided
 
-## Проверочка хоста
+```sh
+chmod 755 ./run.sh
+```
+
+затем пробуем
+
+```sh
+./run.sh
+```
 
 Как только всё запустилось в поисковоую строку вводим 
 
@@ -53,13 +49,6 @@ http://<удаленный_хост>:9000
 ## Небольшая шпаргалка
 
 ```php
-
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-            'password' => bcrypt("123123123"),
-        ]);
-
         $cars = DB::table('cars')
         ->join('tests', 'cars.id_test', '=', 'tests.id')
         ->where('cars.name', '=', DB::raw('tests.test'))
@@ -74,40 +63,15 @@ http://<удаленный_хост>:9000
     }
 ```
 
+```sh
+public function cars():HasMany{
+        return $this->hasMany(Car::class);
+    }
+```
+
 ```sh 
     public function index(){
         $requests = ModelsRequest::with(['users', 'cars'])->get();
         return view("admin.index",compact("requests"));
     }
-```
-```sh 
-    const ADMIN_ROLE = "admin";
-
-    public function isAdmin(){
-        return $this->role === self::ADMIN_ROLE;
-    }
-```
-```sh 
-        if(Auth::check()){
-            if(auth()->user()->isAdmin() === true){
-                return $next($request);
-            }
-        }
-        return redirect('login')->with('error', "Авторизуйтесь под админом"); 
-```
-
-картинки
-
-```php
-                    <form method="POST"  enctype="multipart/form-data" action="{{ route('detail.store') }}">
-                        @csrf
-                        <div>
-                            <x-input-label for="path_imahe" :value="__('number')" />
-                            <x-text-input id="path_imahe" class="block mt-1 w-full" type="file" name="path_imahe" :value="old('path_imahe')" required />
-                            <x-input-error :messages="$errors->get('path_imahe')" class="mt-2" />
-                        </div>
-```
-```sh 
-Route::middleware((Admin::class))->group(function () {
-});
 ```
