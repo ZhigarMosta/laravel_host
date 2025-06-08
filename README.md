@@ -28,7 +28,7 @@ scp -r . <имя_пользователя>@<удаленный_хост>:/root/p
 ```sh
 ./run.sh
 ```
-если выдало ошибук permission denaided
+если выдало ошибук `Permission denaided`
 
 ```sh
 chmod 755 ./run.sh
